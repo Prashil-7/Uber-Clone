@@ -2,13 +2,16 @@ const dotenv = require('dotenv')
 const cors = require('cors')
 const express = require('express')
 const  connectDB  = require('./db/db')
-const {register} = require('./routes/user.route')
+const {register,login, profileUser,logout} = require('./routes/user.route')
+const cookiesParser = require('cookie-parser') 
 
 
 const app = express();
+
 dotenv.config();
 connectDB();
 app.use(cors());
+app.use(cookiesParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,6 +20,9 @@ app.get("/",(req,res)=>{
 })
 
 app.use('/api/v1/users',register);
+app.use('/api/v1/users',login);
+app.use('/api/v1/users', profileUser);
+app.use('/api/v1/users', logout);
 
 
 module.exports = app;
