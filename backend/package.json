@@ -1,20 +1,23 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "its uber-clone backend",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon index.js"
-  },
-  "author": "prashil lonare",
+  "description": "",
   "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "dev": " nodemon ./src/server.js"
+  },
   "dependencies": {
-    "dotenv": "^16.4.7",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.13.2"
+    "mongoose": "^8.15.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.10"
   }
 }
