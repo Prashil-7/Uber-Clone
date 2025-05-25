@@ -18,8 +18,7 @@ const login = router.post('/login', [
 
 
 
-const profileUser = router.get('/profile', authUser , 
-    userController.getUserProfile );
+const profileUser = router.get('/profile', authUser , userController.getUserProfile );
 
 const logout = router.get('/logout', authUser , userController.logoutUser )
 

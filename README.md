@@ -220,34 +220,104 @@ Replace `<PORT>` with the value specified in the `.env` file.
 
 ---
 
-## Environment Variables
+# Captain API Documentation
 
-Ensure the following environment variables are set in the `.env` file:
+## Base URL
+```
+http://localhost:<PORT>/api/v1/captain
+```
 
-- `PORT`: The port on which the server runs.
-- `MONGO_URI`: MongoDB connection string.
-- `JWT_SECRET`: Secret key for JWT token generation.
-- `JWT_EXPIRES_IN`: Expiration time for JWT tokens.
+## Endpoints
 
----
+### 1. **Register Captain**
 
-## Running the Application
+**URL:** `/register`  
+**Method:** `POST`  
+**Description:** Register new captain with vehicle details
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+**Request Body:**
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "captain@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "black",
+    "plate": "MH12DE3456",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
 
-2. Start the server:
-   ```bash
-   npm run dev
-   ```
+#### 2. Login
+`POST /login`
+```json
+{
+  "email": "captain@example.com",
+  "password": "password123"
+}
+```
 
-3. Access the API at `http://localhost:<PORT>`.
+#### 3. Get Profile
+`GET /profile`  
+Requires Auth Header: `Authorization: Bearer <token>`
 
----
+#### 4. Logout
+`POST /logout`  
+Requires Auth Header: `Authorization: Bearer <token>`
 
-## Notes
+### Validation Rules
+- Names: Min 3 characters
+- Email: Valid format, unique
+- Password: Min 3 characters
+- Vehicle:
+  - Color: Min 3 characters
+  - Plate: Min 7 characters
+  - Type: "car", "auto", or "motorcycle"
+  - Capacity: Min 1
 
-- Ensure MongoDB is running and accessible via the `MONGO_URI` provided in the `.env` file.
-- The `token` in the response can be used for authentication in future requests.
+### Success Responses
+```json
+{
+  "token": "eyJhbG...",
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "captain@example.com",
+    "status": "inactive",
+    "vehicle": {
+      "color": "black",
+      "plate": "MH12DE3456",
+      "capacity": 4,
+  "vehicleType": "car"
+    }
+  }
+}
+```
+
+### Error Responses
+```json
+{
+  "msg": "Error message here",
+  "err": [
+    {
+      "msg": "Validation error message",
+      "param": "field_name"
+    }
+  ]
+}
+```
+
+### Environment Variables
+```env
+PORT=8000
+MONGO_URI=mongodb://localhost:27017/uber-clone
+JWT_CAPTAIN_SECRET=your_secret
+JWT_EXPIRES_IN=24h
+```
