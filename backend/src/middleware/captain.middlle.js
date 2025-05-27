@@ -4,7 +4,13 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports.captainAuth = async (req, res,next)=>{
-    const  token = req.cookies.token || req.headers.authorization?.token.split(' ')[1];
+    // const  token = req.cookies.token || req.headers.authorization?.token.split(' ')[1];
+
+    const token = req.cookies?.token || (
+  req.headers.authorization?.startsWith('Bearer ')
+    ? req.headers.authorization.split(' ')[1]
+    : null
+);
 
     if(!token){
         return res.status(401).json({msg:'Unauthorized token'})
@@ -16,7 +22,7 @@ module.exports.captainAuth = async (req, res,next)=>{
 
     try {
         const decoded = jwt.verify(token ,process.env.JWT_CAPTAIN_SECRET);
-        const captain =await captainModel.findById(decoded._id);
+        const captain =await captainModel.findById(decoded.id);
 
         req.captain = captain
         return        next();

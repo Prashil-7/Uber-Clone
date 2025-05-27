@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
-import {Link} from 'react-router-dom'  
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from 'react'
+import {Link, useNavigate} from 'react-router-dom'  
+import axios from 'axios'
+import  { userDatacontext  }  from '../context/Usercontext'
 
 function UserSignup() {
   const [email, setEmail] = useState('')
@@ -7,17 +10,35 @@ function UserSignup() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastname] = useState('')
   const [userData ,setuserData] =useState('')
+  const {user ,setUser} =  useContext(userDatacontext)
 
-  const submitHandler =(e)=>{
+  const navigate = useNavigate()
+ 
+  const submitHandler = async (e)=>{
     e.preventDefault();
-    setuserData({
+     const newUser={
       password:password,
       email:email,
-      fullName:{
-      firstName:firstName,
-      lastName:lastName
+      fullname:{
+      firstname:firstName,
+      lastname:lastName
       }
-    })
+    }
+
+    const res= await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user/register`,newUser) 
+
+    if(res.status === 201){
+      const data = res.data
+      setUser(data.user)
+      localStorage.setItem('token',data.token);
+
+      navigate('/home')
+      
+    }
+
+
+
+
     setEmail('')
     setFirstName('')
     setLastname('');
@@ -69,7 +90,7 @@ function UserSignup() {
             <input  value={password} onChange={(e)=>setPassword(e.target.value)} 
              className='  bg-[#eeeeee] rounded w-full px-4 py-2 text-lg placeholder:text-base border'  type="password" required placeholder='Password' /> 
             
-            <button  className='bg-black  text-white rounded w-full px-4 py-2 text-lg  mt-8 placeholder:text-base font-bold border' >Sign Up as Driver</button>
+            <button  className='bg-black  text-white rounded w-full px-4 py-2 text-lg  mt-8 placeholder:text-base font-bold border' >Create Account</button>
 
 
                 <p className='text-center pt-2 '>Already have a  Uber account? 

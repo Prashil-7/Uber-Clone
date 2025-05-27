@@ -21,10 +21,10 @@ app.get("/",(req,res)=>{
 })
 
 //user routes
-app.use('/api/v1/users',register);
-app.use('/api/v1/users',login);
-app.use('/api/v1/users', profileUser);
-app.use('/api/v1/users', logout);
+app.use('/api/v1/user',register);
+app.use('/api/v1/user',login);
+app.use('/api/v1/user', profileUser);
+app.use('/api/v1/user', logout);
 
 
 //captain routes
