@@ -18,7 +18,7 @@ export default function UserProtectedWrapper( {children}) {
 
       const fetchProfile = async ()=>{
         try {
-           const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/captain/profile`, {
+           const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/profile`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
