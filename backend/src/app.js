@@ -5,7 +5,7 @@ const  connectDB  = require('./db/db')
 const {register,login, profileUser,logout} = require('./routes/user.route')
 const {captainRegister,captainLogin,captainProfile,captainLogout} = require('./routes/captain.route')
 const cookiesParser = require('cookie-parser') 
-
+ const {maps, distance} = require('./routes/maps.route')
 
 const app = express();
 
@@ -33,5 +33,9 @@ app.use('/api/v1/captain',captainLogin)
 app.use('/api/v1/captain',captainProfile)
 app.use('/api/v1/captain',captainLogout)
 
+//map
+
+app.use('/api/v1/maps', maps)
+app.use('/api/v1/maps', distance)
 
 module.exports = app;
